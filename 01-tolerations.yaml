@@ -1,22 +1,26 @@
-# apiVersion: v1
-# kind: Pod
-# metadata:
-#   name: nginx-tolerations
-#   labels:
-#     env: test
-# spec:
-#   containers:
-#   - name: nginx
-#     image: nginx
-#     imagePullPolicy: Always #keep this as always
-#   tolerations:
-#   - key: "project"
-#     operator: "Equal"
-#     value: "expense"
-#     effect: "NoSchedule"
-#   - key: "project"
-#     operator: "Exists"
-#     effect: "NoSchedule"
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-tolerations
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: Always #keep this as always
+  tolerations:
+  - key: "project"
+    operator: "Equal"
+    value: "expense"
+    effect: "NoSchedule"
+  - key: "project"
+    operator: "Exists"
+    effect: "NoSchedule"
+
+#Note: Tainting a node prevents pods from being scheduled unless they have matching tolerations. 
+# However, tolerations alone don't guarantee scheduling; adding conditions like nodeSelector helps target the specific node.
+
 
 # First apply taint on specific node and then apply tolerations on it.
 # kubectl get nodes
@@ -35,23 +39,26 @@
 # Pod affinity/anti-affinity
 # Constraints like topology spread, priority, etc.
 
-apiVersion: v1
-kind: Pod
-metadata:
-  name: node-selector-demo
-  labels:
-    env: test
-spec:
-  containers:
-  - name: nginx
-    image: nginx
-    imagePullPolicy: Always
-  nodeSelector:
-    disktype: ssd
-
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: node-selector-demo
+#   labels:
+#     env: test
+# spec:
+#   containers:
+#   - name: nginx
+#     image: nginx
+#     imagePullPolicy: Always
+#   nodeSelector:
+#     disktype: ssd
+# kubectl get nodes
 # kubectl label nodes ip-192-168-14-127.ec2.internal disktype=ssd
 # kubectl apply -f 01-tolerations.yaml
 # kubectl get pods -o wide
+# unlabel:
+# kubectl label nodes ip-192-168-14-127.ec2.internal disktype-
+
 
 # apiVersion: v1
 # kind: Pod
