@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: with-node-affinity-preferred
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: project
+            operator: In
+            values:
+            - expense
+  containers:
+  - name: nginx-with-node-affinity
+    image: nginx
+
+# Label the node:
+# Quick checklist for this to work:
+# Label your node:
+# kubectl label node my-node project=expense
+
+# Create the pod with your YAML file:
+# kubectl apply -f your-pod.yaml
+
+# Check pod placement and node labels:
+# kubectl get pods -o wide
+# kubectl get nodes --show-labels
+
+# preferredDuringSchedulingIgnoredDuringExecution sets soft preferences, so nodeSelector (a hard requirement) isn’t needed.
