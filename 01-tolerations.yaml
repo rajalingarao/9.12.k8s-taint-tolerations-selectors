@@ -20,7 +20,7 @@ spec:
 
 # First apply taint on specific node and then apply tolerations on it.
 # kubectl get nodes
-# kubectl taint nodes ip-192-168-42-153.ec2.internal project=expense:NoSchedule
+# kubectl taint nodes ip-192-168-14-127.ec2.internal project=expense:NoSchedule
 
 # # 🧠 Important Facts
 # Tolerations do not attract pods to nodes. They only permit scheduling.
@@ -32,46 +32,46 @@ spec:
 # Pod affinity/anti-affinity
 # Constraints like topology spread, priority, etc.
 
-apiVersion: v1
-kind: Pod
-metadata:
-  name: node-selector-demo
-  labels:
-    env: test
-spec:
-  containers:
-  - name: nginx
-    image: nginx
-    imagePullPolicy: Always
-  nodeSelector:
-    disktype: ssd
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: node-selector-demo
+#   labels:
+#     env: test
+# spec:
+#   containers:
+#   - name: nginx
+#     image: nginx
+#     imagePullPolicy: Always
+#   nodeSelector:
+#     disktype: ssd
 
 # kubectl label nodes <your-node-name> disktype=ssd
 # kubectl apply -f your-pod.yaml
 # kubectl get pods -o wide
 
-apiVersion: v1
-kind: Pod
-metadata:
-  name: node-selector-demo-1
-  labels:
-    env: test
-spec:
-  containers:
-  - name: nginx
-    image: nginx
-    imagePullPolicy: Always
-  nodeSelector:
-    disktype: ssd
-  tolerations:
-  - key: "key1"
-    operator: "Equal"
-    value: "value1"
-    effect: "NoExecute"
-  - key: "key1"
-    operator: "Equal"
-    value: "value1"
-    effect: "NoSchedule"
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: node-selector-demo-1
+#   labels:
+#     env: test
+# spec:
+#   containers:
+#   - name: nginx
+#     image: nginx
+#     imagePullPolicy: Always
+#   nodeSelector:
+#     disktype: ssd
+#   tolerations:
+#   - key: "key1"
+#     operator: "Equal"
+#     value: "value1"
+#     effect: "NoExecute"
+#   - key: "key1"
+#     operator: "Equal"
+#     value: "value1"
+#     effect: "NoSchedule"
 
 # ✅ To Make This Work
 # # Ensure the target node has:
@@ -82,4 +82,4 @@ spec:
 # kubectl taint nodes <node-name> key1=value1:NoSchedule
 # kubectl taint nodes <node-name> key1=value1:NoExecute
 
-Note: Tainting a node prevents pods from being scheduled unless they have matching tolerations. However, tolerations alone don't guarantee scheduling; adding conditions like nodeSelector helps target the specific node.
+#Note: Tainting a node prevents pods from being scheduled unless they have matching tolerations. However, tolerations alone don't guarantee scheduling; adding conditions like nodeSelector helps target the specific node.
