@@ -22,10 +22,10 @@ spec:
 # Label the node:
 # Quick checklist for this to work:
 # Label your node:
-# kubectl label node my-node project=expense
+# kubectl label node ip-192-168-14-127.ec2.internal project=expense
 
 # Create the pod with your YAML file:
-# kubectl apply -f your-pod.yaml
+# kubectl apply -f 05-node-anti-affinity-preferred.yaml
 
 # Check pod placement and node labels:
 # kubectl get pods -o wide
